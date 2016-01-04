@@ -1,0 +1,16 @@
+files <- c("")
+files[1] <- "ca_2010_lhs_all_25_results.RData"
+files[2] <- "ca_2010_lhs_all_50_results.RData"
+files[3] <- "ca_2010_lhs_all_100_results.RData"
+files[4] <- "ca_2010_lhs_all_200_results.RData"
+files[5] <- "ca_2010_lhs_all_400_results.RData"
+
+for(i in 1:length(files)){
+  load(files[i])
+  df <- results[,c("standard_report_legacy.total_electricity","reducespaceinfiltrationbypercentage.space_infiltration_reduction_percent","setlightingloadsbylpd.lpd","setwindowtowallratio.wwr")]
+  #lm.model <- lm(formula = standard_report_legacy.total_electricity ~ reducespaceinfiltrationbypercentage.space_infiltration_reduction_percent + setlightingloadsbylpd.lpd + setwindowtowallratio.wwr, data = df) 
+  lm.model <- lm(formula = standard_report_legacy.total_electricity ~ reducespaceinfiltrationbypercentage.space_infiltration_reduction_percent + setlightingloadsbylpd.lpd + setwindowtowallratio.wwr  + reducespaceinfiltrationbypercentage.space_infiltration_reduction_percent * setlightingloadsbylpd.lpd * setwindowtowallratio.wwr + reducespaceinfiltrationbypercentage.space_infiltration_reduction_percent * setlightingloadsbylpd.lpd + reducespaceinfiltrationbypercentage.space_infiltration_reduction_percent * setwindowtowallratio.wwr + setlightingloadsbylpd.lpd * setwindowtowallratio.wwr, data = df)   
+  print(paste("number of samples:",nrow(results)))
+  print(summary(lm.model))
+}
+
