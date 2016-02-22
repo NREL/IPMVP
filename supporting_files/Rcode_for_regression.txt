@@ -1,0 +1,11 @@
+
+files[1] <- "ca_2010_lhs_all_400_results.RData"
+
+for(i in 1:length(files)){
+  load(files[i])
+  df <- results[,c("standard_report_legacy.total_electricity","reducespaceinfiltrationbypercentage.space_infiltration_reduction_percent","setlightingloadsbylpd.lpd","setwindowtowallratio.wwr")]
+  lm.model <- lm(formula = standard_report_legacy.total_electricity ~ reducespaceinfiltrationbypercentage.space_infiltration_reduction_percent + setlightingloadsbylpd.lpd + setwindowtowallratio.wwr, data = df) 
+  print(paste("number of samples:",nrow(results)))
+  print(summary(lm.model))
+}
+

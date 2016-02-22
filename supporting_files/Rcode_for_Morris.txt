@@ -1,0 +1,12 @@
+load("ca_2010_morris_triangle_results.RData")
+load("m_Elec_EUI.R")
+
+mu_star <- mean(abs(n$ee[,1]))
+mu_star[2] <- mean(abs(n$ee[,2]))
+mu_star[3] <- mean(abs(n$ee[,3]))
+
+png(paste("Morris_elementary_effects.png",sep=""), width=8, height=8.0, units="in", pointsize=10, res=200)
+barplot(height=mu_star, names.arg=c("Infiltration","LPD","WWR"), ylab="Mu Star", main="Elementary Effects",col=c(rgb(0,0,1,0.5), rgb(0,1,0,0.5), rgb(1,0,0,0.5)))
+dev.off()
+
+

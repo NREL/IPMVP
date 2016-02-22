@@ -1,0 +1,50 @@
+load("ca_2010_lhs_triangle_metadata.RData")
+load("ca_2010_lhs_triangle_results.RData")
+
+infil <- results$reducespaceinfiltrationbypercentage.space_infiltration_reduction_percent[intersect(which(results$setlightingloadsbylpd.lpd == 0.6), which(results$setwindowtowallratio.wwr == 0.33))]
+lpd <- results$setlightingloadsbylpd.lpd[intersect(which(results$reducespaceinfiltrationbypercentage.space_infiltration_reduction_percent == 0.0), which(results$setwindowtowallratio.wwr == 0.33))]
+wwr <- results$setwindowtowallratio.wwr[intersect(which(results$setlightingloadsbylpd.lpd == 0.6), which(results$reducespaceinfiltrationbypercentage.space_infiltration_reduction_percent == 0.0))]
+
+png(paste("Infiltration.png",sep=""), width=8, height=8.0, units="in", pointsize=10, res=200)
+hist(infil, breaks=10, freq=F, col=rgb(0,0,1,0.5), main="Infiltration Percent Change", xlab="Inflitration Percent Change (%)")
+lines(density(infil),col=rgb(0,0,1,1),lwd=2)
+dev.off()
+
+png(paste("LPD.png",sep=""), width=8, height=8.0, units="in", pointsize=10, res=200)
+hist(lpd, breaks=10, freq=F, col=rgb(0,1,0,0.5), main="Lighting Power Density", xlab="LPD (W/ft^2)")
+lines(density(lpd),col=rgb(0,1,0,1),lwd=2)
+dev.off()
+
+png(paste("WWR.png",sep=""), width=8, height=8.0, units="in", pointsize=10, res=200)
+hist(wwr, breaks=10, freq=F, col=rgb(1,0,0,0.5), main="Window to Wall Ratio", xlab="WWR (fraction)")
+lines(density(wwr),col=rgb(1,0,0,1),lwd=2)
+dev.off()
+
+EUI_infil <- results$standard_report_legacy.total_electricity[intersect(which(results$setlightingloadsbylpd.lpd == 0.6), which(results$setwindowtowallratio.wwr == 0.33))]
+EUI_lpd <- results$standard_report_legacy.total_electricity[intersect(which(results$reducespaceinfiltrationbypercentage.space_infiltration_reduction_percent == 0.0), which(results$setwindowtowallratio.wwr == 0.33))]
+EUI_wwr <- results$standard_report_legacy.total_electricity[intersect(which(results$setlightingloadsbylpd.lpd == 0.6), which(results$reducespaceinfiltrationbypercentage.space_infiltration_reduction_percent == 0.0))]
+
+png(paste("EUI_infiltration.png",sep=""), width=8, height=8.0, units="in", pointsize=10, res=200)
+hist(EUI_infil, breaks=10, freq=F, col=rgb(0,0,1,0.5), main="Electric EUI varying Infiltration", xlab="Electric EUI", xlim = c(min(EUI_infil,EUI_lpd,EUI_wwr),max(EUI_infil,EUI_lpd,EUI_wwr)))
+lines(density(EUI_infil),col=rgb(0,0,1,1),lwd=2)
+dev.off()
+png(paste("EUI_LPD.png",sep=""), width=8, height=8.0, units="in", pointsize=10, res=200)
+hist(EUI_lpd, breaks=10, freq=F, col=rgb(0,1,0,0.5), main="Electric EUI varying LPD", xlab="Electric EUI", xlim = c(min(EUI_infil,EUI_lpd,EUI_wwr),max(EUI_infil,EUI_lpd,EUI_wwr)))
+lines(density(EUI_lpd), col=rgb(0,1,0,1),lwd=2)
+dev.off()
+png(paste("EUI_WWR.png",sep=""), width=8, height=8.0, units="in", pointsize=10, res=200)
+hist(EUI_wwr, breaks=10, freq=F, col=rgb(1,0,0,0.5), main="Electric EUI varying WWR", xlab="Electric EUI", xlim = c(min(EUI_infil,EUI_lpd,EUI_wwr),max(EUI_infil,EUI_lpd,EUI_wwr)))
+lines(density(EUI_wwr),col=rgb(1,0,0,1),lwd=2)
+dev.off()
+
+png(paste("EUI_all.png",sep=""), width=8, height=8.0, units="in", pointsize=10, res=200)
+hist(EUI_infil, breaks=10, freq=F, col=rgb(0,0,1,0.5), main="Electric EUI Variation", xlab="Electric EUI", xlim = c(min(EUI_infil,EUI_lpd,EUI_wwr),max(EUI_infil,EUI_lpd,EUI_wwr)))
+lines(density(EUI_infil),col=rgb(0,0,1,1),lwd=2)
+
+hist(EUI_lpd, breaks=10, freq=F, col=rgb(0,1,0,0.5), xlim = c(min(EUI_infil,EUI_lpd,EUI_wwr),max(EUI_infil,EUI_lpd,EUI_wwr)), add=T)
+lines(density(EUI_lpd),col=rgb(0,1,0,1),lwd=2)
+
+hist(EUI_wwr, breaks=10, freq=F, col=rgb(1,0,0,0.5), xlim = c(min(EUI_infil,EUI_lpd,EUI_wwr),max(EUI_infil,EUI_lpd,EUI_wwr)), add=T)
+lines(density(EUI_wwr),col=rgb(1,0,0,1),lwd=2)
+legend('topright',c('Infiltration','LPD','WWR'),fill=c(rgb(0,0,1,0.5), rgb(0,1,0,0.5), rgb(1,0,0,0.5)),bty='n',border=NA)
+dev.off()
