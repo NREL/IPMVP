@@ -1,4 +1,4 @@
-
+files <- c("")
 files[1] <- "ca_2010_lhs_all_400_results.RData"
 
 for(i in 1:length(files)){
@@ -8,4 +8,11 @@ for(i in 1:length(files)){
   print(paste("number of samples:",nrow(results)))
   print(summary(lm.model))
 }
+
+ModelPrediction <- predict.lm(lm.model,newdata=df,interval = "confidence", se.fit = TRUE, level = 0.95)
+summary(lm.model)$sigma
+
+df.residual(lm.model)
+
+qt(0.975, df.residual(lm.model))
 
