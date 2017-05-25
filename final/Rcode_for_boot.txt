@@ -1,0 +1,30 @@
+results <- read.csv("ca_2010_lhs_all_5_to_15.csv")
+
+lpd <- results$reducelightingloadsbypercentage.lighting_power_reduction_percent
+epd <- results$reduceelectricequipmentloadsbypercentage.elecequip_power_reduction_percenthist
+
+png(paste("LPD.png",sep=""), width=8, height=8.0, units="in", pointsize=10, res=200)
+hist(lpd, breaks=10, freq=F, col=rgb(0,1,0,0.5), main="Lighting Power Density", xlab="LPD (% Change from baseline)")
+lines(density(lpd),col=rgb(0,1,0,1),lwd=2)
+dev.off()
+
+png(paste("EPD.png",sep=""), width=8, height=8.0, units="in", pointsize=10, res=200)
+hist(epd, breaks=10, freq=F, col=rgb(0,0,1,0.5), main="Electric Equipment Power Density", xlab="EPD (% Change from baseline)")
+lines(density(epd),col=rgb(0,1,0,1),lwd=2)
+dev.off()
+
+elec <- results$CompareBaseline.total_electric
+elec_savings <- results$CompareBaseline.total_electric_savings
+
+trim_elec <- sort(elec)[21:381]
+trim_elec_savings <- sort(elec_savings)[21:381]
+
+png(paste("trim_elec_savings.png",sep=""), width=8, height=8.0, units="in", pointsize=10, res=200)
+hist(trim_elec_savings, breaks=10, freq=F, col=rgb(0,0,1,0.5), main="Total Electric Savings (kWh) from both LPD and EPD reductions", xlab="Total Electric Savings (kWh)")
+lines(density(trim_elec_savings),col=rgb(0,1,0,1),lwd=2)
+dev.off()
+
+#density.default(trim_elec_savings)
+mean_trim <- mean(trim_elec_savings)
+distance <- abs(mean_trim - trim_elec_savings[1])
+relative_precision <- distance/mean_trim

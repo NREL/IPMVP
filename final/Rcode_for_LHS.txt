@@ -1,0 +1,65 @@
+results <- read.csv("ca_2010_lhs_5_to_15.csv")
+
+lpd <- results$reducelightingloadsbypercentage.lighting_power_reduction_percent[which(results$reduceelectricequipmentloadsbypercentage.elecequip_power_reduction_percent == 0.0)]
+epd <- results$reduceelectricequipmentloadsbypercentage.elecequip_power_reduction_percent[which(results$reducelightingloadsbypercentage.lighting_power_reduction_percent == 0.0)]
+
+png(paste("LPD.png",sep=""), width=8, height=8.0, units="in", pointsize=10, res=200)
+hist(lpd, breaks=10, freq=F, col=rgb(0,1,0,0.5), main="Lighting Power Density", xlab="LPD (% Change from baseline)")
+lines(density(lpd),col=rgb(0,1,0,1),lwd=2)
+dev.off()
+
+png(paste("EPD.png",sep=""), width=8, height=8.0, units="in", pointsize=10, res=200)
+hist(epd, breaks=10, freq=F, col=rgb(0,0,1,0.5), main="Electric Equipment Power Density", xlab="EPD (% Change from baseline)")
+lines(density(epd),col=rgb(0,1,0,1),lwd=2)
+dev.off()
+
+lpd_elec <- results$CompareBaseline.total_electric[which(results$reduceelectricequipmentloadsbypercentage.elecequip_power_reduction_percent == 0.0)]
+lpd_elec_savings <- results$CompareBaseline.total_electric_savings[which(results$reduceelectricequipmentloadsbypercentage.elecequip_power_reduction_percent == 0.0)]
+epd_elec <- results$CompareBaseline.total_electric[which(results$reducelightingloadsbypercentage.lighting_power_reduction_percent == 0.0)]
+epd_elec_savings <- results$CompareBaseline.total_electric_savings[which(results$reducelightingloadsbypercentage.lighting_power_reduction_percent == 0.0)]
+
+
+png(paste("lpd_elec.png",sep=""), width=8, height=8.0, units="in", pointsize=10, res=200)
+hist(lpd_elec, breaks=10, freq=F, col=rgb(0,1,0,0.5), main="Total Electric varying LPD", xlab="Total Electric (kWh)", xlim = c(min(epd_elec,lpd_elec),max(430000,epd_elec,lpd_elec)))
+lines(density(lpd_elec), col=rgb(0,1,0,1),lwd=2)
+abline(v=421977.7777777778,lwd=2)
+legend('topright',c('LPD','Baseline'),fill=c(rgb(0,1,0,0.5), rgb(0,0,0,1)),bty='n',border=NA)
+dev.off()
+
+png(paste("lpd_elec_savings.png",sep=""), width=8, height=8.0, units="in", pointsize=10, res=200)
+hist(lpd_elec_savings, breaks=10, freq=F, col=rgb(0,1,0,0.5), main="Total Electric Savings varying LPD", xlab="Total Electric (kWh)", xlim = c(min(epd_elec_savings,lpd_elec_savings),max(epd_elec_savings,lpd_elec_savings)))
+lines(density(lpd_elec_savings), col=rgb(0,1,0,1),lwd=2)
+dev.off()
+
+png(paste("epd_elec.png",sep=""), width=8, height=8.0, units="in", pointsize=10, res=200)
+hist(epd_elec, breaks=10, freq=F, col=rgb(0,0,1,0.5), main="Total Electric varying EPD", xlab="Total Electric (kWh)", xlim = c(min(epd_elec,lpd_elec),max(430000,epd_elec,lpd_elec)))
+lines(density(epd_elec), col=rgb(0,1,0,1),lwd=2)
+abline(v=421977.7777777778,lwd=2)
+legend('topright',c('EPD','Baseline'),fill=c(rgb(0,0,1,0.5), rgb(0,0,0,1)),bty='n',border=NA)
+dev.off()
+
+png(paste("epd_elec_savings.png",sep=""), width=8, height=8.0, units="in", pointsize=10, res=200)
+hist(epd_elec_savings, breaks=10, freq=F, col=rgb(0,0,1,0.5), main="Total Electric Savings varying EPD", xlab="Total Electric (kWh)", xlim = c(min(epd_elec_savings,lpd_elec_savings),max(epd_elec_savings,lpd_elec_savings)))
+lines(density(epd_elec_savings), col=rgb(0,1,0,1),lwd=2)
+dev.off()
+
+
+
+png(paste("electric_all.png",sep=""), width=8, height=8.0, units="in", pointsize=10, res=200)
+hist(lpd_elec, breaks=10, freq=F, col=rgb(0,1,0,0.5), main="Total Electric varying LPD and EPD", xlab="Total Electric (kWh)", xlim = c(min(epd_elec,lpd_elec),max(430000,epd_elec,lpd_elec)))
+lines(density(lpd_elec), col=rgb(0,1,0,1),lwd=2)
+
+hist(epd_elec, breaks=10, freq=F, col=rgb(0,0,1,0.5), main="Total Electric varying LPD and EPD", xlab="Total Electric (kWh)", xlim = c(min(epd_elec,lpd_elec),max(430000,epd_elec,lpd_elec)), add=T)
+lines(density(epd_elec), col=rgb(0,1,0,1),lwd=2)
+abline(v=421977.7777777778,lwd=2)
+legend('topright',c('LPD','EPD','Baseline'),fill=c(rgb(0,1,0,0.5), rgb(0,0,1,0.5), rgb(0,0,0,1)),bty='n',border=NA)
+dev.off()
+
+png(paste("electric_savings_all.png",sep=""), width=8, height=8.0, units="in", pointsize=10, res=200)
+hist(lpd_elec_savings, breaks=10, freq=F, col=rgb(0,1,0,0.5), main="Total Electric Savings varying LPD and EPD", xlab="Total Electric (kWh)", xlim = c(min(epd_elec_savings,lpd_elec_savings),max(epd_elec_savings,lpd_elec_savings)))
+lines(density(lpd_elec_savings), col=rgb(0,1,0,1),lwd=2)
+
+hist(epd_elec_savings, breaks=10, freq=F, col=rgb(0,0,1,0.5), main="Total Electric Savings varying LPD and EPD", xlab="Total Electric (kWh)", xlim = c(min(epd_elec_savings,lpd_elec_savings),max(epd_elec_savings,lpd_elec_savings)), add=T)
+lines(density(epd_elec_savings), col=rgb(0,1,0,1),lwd=2)
+legend('topright',c('LPD','EPD'),fill=c(rgb(0,1,0,0.5), rgb(0,0,1,0.5)),bty='n',border=NA)
+dev.off()

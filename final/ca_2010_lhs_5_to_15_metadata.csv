@@ -1,0 +1,13 @@
+display_name,display_name_short,export,maximum,measure_id,metadata_id,minimum,name,objective_function,objective_function_group,objective_function_index,output,perturbable,pivot,static_value,units,value_type,visualize,measure_name,measure_display_name,type_of_variable
+Total Electric (kWh),Total Electric (kWh),true,,,,,CompareBaseline.total_electric,true,3,2,true,false,false,,kWh,double,true,CompareBaseline,,output
+Total Electric Savings (kWh),Total Electric Savings (kWh),true,,,,,CompareBaseline.total_electric_savings,true,1,0,true,false,false,,kWh,double,true,CompareBaseline,,output
+Total Gas (Therms),Total Gas (Therms),true,,,,,CompareBaseline.total_gas,true,4,3,true,false,false,,Therms,double,true,CompareBaseline,,output
+Total Gas Savings (Therms),Total Gas Savings (Therms),true,,,,,CompareBaseline.total_gas_savings,true,2,1,true,false,false,,Therms,double,true,CompareBaseline,,output
+Total Electricity Use (kWh),Total Electricity Use (kWh),true,,,,,OpenStudioResults.electricity_ip,false,,,true,false,false,,kWh,double,true,OpenStudioResults,,output
+Total Gas Use (MBtu),Total Gas Use (MBtu),true,,,,,OpenStudioResults.natural_gas_ip,false,,,true,false,false,,MBtu,double,true,OpenStudioResults,,output
+Unmet Cooling Hours,Unmet Cooling Hours,true,,,,,OpenStudioResults.time_setpoint_not_met_during_occupied_cooling,false,,,true,false,false,,hrs,double,false,OpenStudioResults,,output
+Unmet Heating Hours,Unmet Heating Hours,true,,,,,OpenStudioResults.time_setpoint_not_met_during_occupied_heating,false,,,true,false,false,,hrs,double,false,OpenStudioResults,,output
+Total Unmet Hours,Total Unmet Hours,true,,,,,OpenStudioResults.time_setpoint_not_met_during_occupied_hours,false,,,true,false,false,,hrs,double,false,OpenStudioResults,,output
+Building Area,Building Area,true,,,,,OpenStudioResults.total_building_area,false,,,true,false,false,,m2,double,false,OpenStudioResults,,output
+Electric Equip Power Reduction (%),Electric Equip Power Reduction (%),true,15.0,a6d323c7-9009-4d88-8116-df841e694038,,5.0,reduceelectricequipmentloadsbypercentage.elecequip_power_reduction_percent,false,,,false,true,false,0.0,,double,true,reduceelectricequipmentloadsbypercentage,ReduceElectricEquipmentLoadsByPercentage,variable
+Lighting Power Reduction (%),Lighting Power Reduction (%),true,15.0,562d7d28-3d47-442c-b07a-84347e40af37,,5.0,reducelightingloadsbypercentage.lighting_power_reduction_percent,false,,,false,true,false,0.0,,double,true,reducelightingloadsbypercentage,ReduceLightingLoadsByPercentage,variable
